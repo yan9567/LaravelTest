@@ -131,8 +131,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'attributes' => [
+            'rule' => 'customer msg',
         ],
     ],
 
