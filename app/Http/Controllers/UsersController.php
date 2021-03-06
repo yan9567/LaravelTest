@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //引入用户模型
 use App\Models\User;
+//引入用户认证管理
+use Auth;
 
 class UsersController extends Controller
 {
@@ -36,6 +38,10 @@ class UsersController extends Controller
 
         ]);
 
+	//注册成功自动登录
+	Auth::login($user);
+		
+	
         //注册成功提示
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
 
