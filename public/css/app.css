@@ -10053,3 +10053,12 @@ section.user_info h1 {
   max-width: 50px;
   border-radius: 50%;
 }
+
+.gravatar {
+  margin: 15px auto;
+  text-align: center;
+}
+.gravatar .gravatar {
+  float: none;
+  max-width: 100px;
+}
