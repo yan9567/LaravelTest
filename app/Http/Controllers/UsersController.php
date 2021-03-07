@@ -53,12 +53,18 @@ class UsersController extends Controller
 	//进入个人信息更新页
 	public function edit(User $user)
 	{
+		//authorize授权策略Policy，参数1为策略名，参数2为验证数据
+		$this->authorize('update', $user);//在app/Policies/UserPolicy.php定义了update策略
+
 		return view('users.edit', compact('user'));
 	}
 
 	//更新个人信息
 	public function update(User $user, Request $request)
 	{
+		//authorize授权策略Policy，参数1为策略名，参数2为验证数据
+		$this->authorize('update', $user);//在app/Policies/UserPolicy.php定义了update策略		
+
 		//validate验证输入格式
 		$this->validate($request, [
 			'name' => 'required|max:50',
@@ -75,6 +81,18 @@ class UsersController extends Controller
 		session()->flash('success', '个人资料更新成功！');
 		
 		return redirect()->route('users.show', $user->id);
+	}
+
+	//未登录权限限制
+	public function __construct()
+	{
+		$this->middleware('auth', [
+			'except' => ['show', 'create', 'store']
+		]);
+		
+		$this->middleware('guest', [
+			'only' => ['create']
+		]);
 	}
 
 }

@@ -27,7 +27,8 @@ class SessionsController extends Controller
         if (Auth::attempt($credentials, $request->has('remember'))) {
             //认证成功
             session()->flash('success', '欢迎回来！');
-            return redirect()->route('users.show', [Auth::user()]);/*Auth::user()获取用户信息*/
+            $fallback = route('users.show', Auth::user());	/*Auth::user()获取用户信息*/
+            return redirect()->intended($fallback);	/*intended返回上次尝试访问页，为空进入默认地址fallback*/
         } else {
             //认证失败
             session()->flash('danger', '很抱歉，您的邮箱和密码不区配');
@@ -41,6 +42,14 @@ class SessionsController extends Controller
     	Auth::logout();
     	session()->flash('success', '您已成功退出！');
     	return redirect('login');
+    }
+    
+    //访问限制
+    public function __construct()
+    {
+    	$this->middleware('guest', [
+    		'only' => ['create']
+    	]);
     }
 
 }
