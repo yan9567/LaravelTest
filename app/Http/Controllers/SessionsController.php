@@ -23,8 +23,8 @@ class SessionsController extends Controller
             'password' => 'required'
         ]);
         
-        //Auth认证信息比较 系统类 
-        if (Auth::attempt($credentials)){
+        //Auth::attemp()认证信息比较,系统类,第一个参数是验证数据，第二个参数指令是否生成记忆令牌cookie（没有记住我，默认登录状态保存2小时） 
+        if (Auth::attempt($credentials, $request->has('remember'))) {
             //认证成功
             session()->flash('success', '欢迎回来！');
             return redirect()->route('users.show', [Auth::user()]);/*Auth::user()获取用户信息*/
@@ -37,6 +37,7 @@ class SessionsController extends Controller
     
     public function destroy()
     {
+    	//Auth::logout()退出登录
     	Auth::logout();
     	session()->flash('success', '您已成功退出！');
     	return redirect('login');
