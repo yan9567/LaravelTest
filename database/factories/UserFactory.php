@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+//定义了工厂模型
 class UserFactory extends Factory
 {
     /**

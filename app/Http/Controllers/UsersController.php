@@ -82,17 +82,27 @@ class UsersController extends Controller
 		
 		return redirect()->route('users.show', $user->id);
 	}
+	
+	//列出所有用户列表
+	public function index()
+	{
+		//paginate 分组输出
+		$users = User::paginate(6);
+		return view('users.index', compact('users'));
+	}
 
 	//未登录权限限制
 	public function __construct()
 	{
 		$this->middleware('auth', [
-			'except' => ['show', 'create', 'store']
+			'except' => ['show', 'create', 'store', 'index']
 		]);
 		
 		$this->middleware('guest', [
 			'only' => ['create']
 		]);
 	}
+	
+	
 
 }
