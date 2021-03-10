@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+//Str字符串类
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -44,6 +46,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+	//生成激活token
+	public static function boot()
+	{
+		parent::boot();
+		//监听creating事件
+		static::creating(function ($user){
+			$user->activation_token = Str::random(10);
+		});
+	}
+
+	//用户头像链接
     public function gravatar($size = '100')
     {
         $hash = md5(strtolower(trim($this->attributes['email'])));
