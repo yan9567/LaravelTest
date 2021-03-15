@@ -14,7 +14,7 @@ class UserFactory extends Factory
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = User::class; //className::class返回类的完全限定名（路径）"\App\Models\User"
 
     /**
      * Define the model's default state.
